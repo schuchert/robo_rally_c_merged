@@ -2,6 +2,7 @@
 
 #include "Coordinate_test_helper.h"
 #include "Robot.h"
+#include "RegisterPhase.h"
 #include "Board.h"
 #include "Card.h"
 #include "RobotAction.h"
@@ -65,17 +66,12 @@ TEST_GROUP(r_b_c_e) {
 };
 
 TEST(r_b_c_e, fully_move_and_rotate) {
-	Robot_set_step(robot, 1, create_move_card(forward, Size2));
-//	check_facing_at(N, 10, 12);
-	Robot_set_step(robot, 2, create_rotate_card(counter_clockwise, D90)); //10,12,W
-//	check_facing_at(W, 10, 12);
-	Robot_set_step(robot, 3, create_move_card(backwards, Size2)); //12,12,W
-//	check_facing_at(W, 12, 12);
-	Robot_set_step(robot, 4, create_rotate_card(clockwise, D270)); //12,12,S
-//	check_facing_at(S, 12, 12);
-	Robot_set_step(robot, 5, create_move_card(backwards, Size2)); //
-//	check_facing_at(S, 12, 14);
-	for (int i = 1; i <= 5; ++i)
+	Robot_set_register(robot, One, create_move_card(forward, Size2));
+	Robot_set_register(robot, Two, create_rotate_card(counter_clockwise, D90));
+	Robot_set_register(robot, Three, create_move_card(backwards, Size2));
+	Robot_set_register(robot, Four, create_rotate_card(clockwise, D270));
+	Robot_set_register(robot, Five, create_move_card(backwards, Size2));
+	for (enum RegisterPhase i = One; i < BeyondLast; i = RegisterPhase(i + 1))
 		Robot_execute(robot, i);
 	check_facing_at(S, 12, 14);
 }
@@ -91,8 +87,7 @@ TEST(r_b_c_e, cannot_move_through_wall) {
 
 TEST(r_b_c_e, move_forward) {
 	Card *card = create_move_card(forward, Size1);
-	Robot_set_step(robot, 1, card);
-	Robot_execute(robot, 1);
-	Coordinate expected = Coordinate_create(10, 11);
-	CHECK_EQUAL(expected, Robot_location(robot));
+	Robot_set_register(robot, One, card);
+	Robot_execute(robot, One);
+	check_facing_at(N, 10, 11);
 }

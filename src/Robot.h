@@ -7,18 +7,18 @@ extern "C" {
 #endif
 
 #include "Movement.h"
+#include "RegisterPhase.h"
 struct Coordinate;
 struct Robot;
 struct Board;
 struct Card;
 
-typedef int StepNumber;
 typedef struct Robot Robot;
 
 Robot* Robot_create(struct Board *, struct Coordinate, enum Orientation);
 void Robot_destroy(struct Robot *);
-void Robot_set_step(Robot *, StepNumber, struct Card *);
-void Robot_execute(struct Robot *, StepNumber);
+void Robot_set_register(Robot *, enum RegisterPhase, struct Card *);
+void Robot_execute(struct Robot *, enum RegisterPhase);
 int Robot_is_at(struct Robot *, struct Coordinate);
 enum Orientation Robot_facing(Robot *);
 void Robot_set_facing(Robot *, enum Orientation);

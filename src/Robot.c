@@ -9,7 +9,7 @@ struct Robot {
 	Board *currentBoard;
 	Coordinate locationOnBoard;
 	enum Orientation facing;
-	Card *steps[5];
+	Card *registers[5];
 };
 
 Robot* Robot_create(Board *board, Coordinate c, enum Orientation o) {
@@ -24,12 +24,12 @@ void Robot_destroy(Robot *value) {
 	release(value);
 }
 
-void Robot_set_step(Robot *r, StepNumber n, Card *c) {
-	r->steps[n-1] = c;
+void Robot_set_register(Robot *r, enum RegisterPhase n, Card *c) {
+	r->registers[n] = c;
 }
 
-void Robot_execute(Robot *r, StepNumber n) {
-	Card_apply(r->steps[n-1], r);
+void Robot_execute(Robot *r, enum RegisterPhase n) {
+	Card_apply(r->registers[n], r);
 }
 
 int Robot_is_at(Robot *r, Coordinate c) {
