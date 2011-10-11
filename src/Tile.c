@@ -1,17 +1,22 @@
 #include "Tile.h"
 #include "CommonMemory.h"
+#include "RegisterPhaseGroup.h"
 
 struct Tile {
-	TILE_M_F behavior;
+	TILE_E_F effect;
 	TileWalls walls;
+	RegisterPhaseGroup registerPhaseGroup;
+	void *extendedData;
 };
 
-Tile *Tile_create(TILE_M_F f, TileWalls w) {
+Tile *Tile_create(TILE_E_F e, TileWalls w, RegisterPhaseGroup g) {
 	Tile *value = acquire(sizeof(Tile));
-	value->behavior = f;
+	value->effect = e;
 	value->walls = w;
+	value->registerPhaseGroup = g;
 	return value;
 }
+
 void Tile_destroy(Tile *value) {
 	release(value);
 }
@@ -25,11 +30,23 @@ TileWalls Tile_walls_at(enum Orientation o) {
 	return w;
 }
 
-int Tile_empty(Tile *t, enum Orientation o, enum Direction d) {
-	return 1;
+void Tile_empty(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
 }
 
 int Tile_allows_movement_in(Tile *t, enum Orientation o, enum Direction d) {
 	enum Orientation actual = Orientation_actual(o, d);
 	return !(t->walls.wallMask & mask_for(actual));
 }
+
+void Tile_execute(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
+   t->effect(t, r, em, rp);
+}
+
+void Tile_set_extended_data(Tile *t, void *d) {
+   t->extendedData = d;
+}
+
+void *Tile_get_extended_data(Tile *t) {
+   return t->extendedData;
+}
+

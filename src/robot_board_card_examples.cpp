@@ -78,7 +78,7 @@ TEST(r_b_c_e, fully_move_and_rotate) {
 
 TEST(r_b_c_e, cannot_move_through_wall) {
 	Coordinate twoNorth = Coordinate_create(10, 12);
-	Tile *tile = Tile_create(Tile_empty, Tile_walls_at(N));
+	Tile *tile = Tile_create(Tile_empty, Tile_walls_at(N), RegisterPhaseGroup_create(Rfg_All));
 	Board_set_tile(board, tile, twoNorth);
 	RobotAction *action = create_action(Action_move, forward, Size3);
 	RobotAction_execute(action, robot);
