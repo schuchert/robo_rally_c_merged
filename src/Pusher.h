@@ -13,7 +13,6 @@ extern "C" {
 #include "Tile.h"
 
 Tile *Pusher_create(enum Orientation, RegisterPhaseGroup group);
-void Pusher_destroy(Tile *);
 
 #ifdef __cplusplus
 }

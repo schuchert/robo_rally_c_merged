@@ -19,7 +19,7 @@ TEST_GROUP(Pusher) {
    }
 
    void teardown() {
-      Pusher_destroy(pusher);
+      Tile_destroy(pusher);
       Board_destroy(b);
       Robot_destroy(r);
    }
