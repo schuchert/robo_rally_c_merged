@@ -33,7 +33,17 @@ TEST(Pusher, PushesAllPhases) {
 }
 
 TEST(Pusher, OnlyPushesPhase1) {
+   pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_One));
+   Tile_execute(pusher, r, Part1, Two);
+   CHECK_EQUAL(Coordinate_create(5,5), Robot_location(r));
+   Tile_execute(pusher, r, Part1, One);
+   CHECK_EQUAL(Coordinate_create(5,6), Robot_location(r));
 }
 
 TEST(Pusher, OnlyPushesOddPhases) {
+   pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_Odd));
+   Tile_execute(pusher, r, Part1, Two);
+   CHECK_EQUAL(Coordinate_create(5,5), Robot_location(r));
+   Tile_execute(pusher, r, Part1, One);
+   CHECK_EQUAL(Coordinate_create(5,6), Robot_location(r));
 }

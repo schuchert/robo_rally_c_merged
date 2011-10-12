@@ -1,6 +1,8 @@
 #include "Pusher.h"
 #include "Robot.h"
 #include "CommonMemory.h"
+#include "RegisterPhaseGroup.h"
+
 static void push_robot(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
    enum Orientation o = *(enum Orientation*) Tile_get_extended_data(t);
    Coordinate destination = Direction_apply(o, forward, Size1, Robot_location(r));

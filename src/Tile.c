@@ -49,7 +49,8 @@ int Tile_allows_movement_in(Tile *t, enum Orientation o, enum Direction d) {
 }
 
 void Tile_execute(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
-   t->effect(t, r, em, rp);
+   if (RegisterPhaseGroup_should_apply(t->registerPhaseGroup, rp))
+      t->effect(t, r, em, rp);
 }
 
 void Tile_set_extended_data(Tile *t, void *d, TILE_E_D_R f) {
