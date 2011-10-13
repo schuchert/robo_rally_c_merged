@@ -1,11 +1,11 @@
 #include <CppUTest/TestHarness.h>
 
-#include "Card.h"
 #include "Pusher.h"
 #include "RegisterPhase.h"
 #include "Robot.h"
 #include "Coordinate.h"
 #include "Board.h"
+#include "Tile.h"
 
 TEST_GROUP(Pusher) {
    Tile *pusher;
@@ -28,22 +28,28 @@ TEST_GROUP(Pusher) {
 #include "Coordinate_test_helper.h"
 TEST(Pusher, PushesAllPhases) {
    pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_All));
-   Tile_execute(pusher, r, Part1, One);
+   Tile_execute(pusher, r, Bem_Pusher, One);
    CHECK_EQUAL(Coordinate_create(5,6), Robot_location(r));
 }
 
 TEST(Pusher, OnlyPushesPhase1) {
    pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_One));
-   Tile_execute(pusher, r, Part1, Two);
+   Tile_execute(pusher, r, Bem_Pusher, Two);
    CHECK_EQUAL(Coordinate_create(5,5), Robot_location(r));
-   Tile_execute(pusher, r, Part1, One);
+   Tile_execute(pusher, r, Bem_Pusher, One);
    CHECK_EQUAL(Coordinate_create(5,6), Robot_location(r));
 }
 
 TEST(Pusher, OnlyPushesOddPhases) {
    pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_Odd));
-   Tile_execute(pusher, r, Part1, Two);
+   Tile_execute(pusher, r, Bem_Pusher, Two);
    CHECK_EQUAL(Coordinate_create(5,5), Robot_location(r));
-   Tile_execute(pusher, r, Part1, One);
+   Tile_execute(pusher, r, Bem_Pusher, One);
    CHECK_EQUAL(Coordinate_create(5,6), Robot_location(r));
+}
+
+TEST(Pusher, PushesAtCorrectTimeInPostPhase) {
+   pusher = Pusher_create(N, RegisterPhaseGroup_create(Rfg_All));
+   Tile_execute(pusher, r, Bem_AirShaft, One);
+   CHECK_EQUAL(Coordinate_create(5,5), Robot_location(r));
 }

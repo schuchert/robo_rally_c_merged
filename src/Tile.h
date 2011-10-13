@@ -21,12 +21,6 @@ enum {
    TileWalls_none = 0
 };
 
-enum BoardElementMove {
-   Part1 = 1,
-   Part2 = 2,
-   Part3 = 3,
-   Part4 = 4
-};
 
 
 typedef void (*TILE_E_F)(Tile *, struct Robot *, enum BoardElementMove, enum RegisterPhase);
