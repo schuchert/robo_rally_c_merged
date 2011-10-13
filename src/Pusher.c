@@ -3,7 +3,7 @@
 #include "CommonMemory.h"
 #include "Tile.h"
 
-static void push_robot(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
+static void push_robot(Tile *t, struct Robot *r, enum BoardElementMove em) {
    if (em == Bem_Pusher) {
       enum Orientation o = *(enum Orientation*) Tile_get_extended_data(t);
       Coordinate destination = Direction_apply(o, forward, Size1, Robot_location(r));

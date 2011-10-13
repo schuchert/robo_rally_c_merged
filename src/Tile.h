@@ -23,14 +23,14 @@ enum {
 
 
 
-typedef void (*TILE_E_F)(Tile *, struct Robot *, enum BoardElementMove, enum RegisterPhase);
+typedef void (*TILE_E_F)(Tile *, struct Robot *, enum BoardElementMove);
 typedef void (*TILE_E_D_R)(Tile *);
 
 Tile *Tile_create(TILE_E_F, TileWalls, struct RegisterPhaseGroup);
 void Tile_destroy(Tile *);
 TileWalls Tile_walls_at(enum Orientation);
 
-void Tile_empty(Tile *, struct Robot *, enum BoardElementMove, enum RegisterPhase);
+void Tile_empty(Tile *, struct Robot *, enum BoardElementMove);
 int Tile_allows_movement_in(Tile *, enum Orientation, enum Direction);
 void Tile_execute(Tile *t, struct Robot *, enum BoardElementMove, enum RegisterPhase);
 void Tile_set_extended_data(Tile *t, void *d, TILE_E_D_R);

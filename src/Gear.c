@@ -8,7 +8,7 @@ typedef struct {
    enum Size s;
 } GearDirectionSize;
 
-static void rotate_robot(Tile *t, struct Robot *r, enum BoardElementMove em, enum RegisterPhase rp) {
+static void rotate_robot(Tile *t, struct Robot *r, enum BoardElementMove em) {
    if(em == Bem_Gear) {
       GearDirectionSize *gds = Tile_get_extended_data(t);
       enum Orientation finalFacing = Orientation_rotate(Robot_facing(r), gds->d, gds->s);
